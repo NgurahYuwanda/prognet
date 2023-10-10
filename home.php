@@ -111,7 +111,7 @@
                 <select type="text" id="prodi" name="prodi" class="form-select" aria-label="Default selectexample">
                   <option selected>Pilih Program Studi</option>
                   <option value="S1 Teknologi Informasi">S1 Teknologi Informasi</option>
-                  <option value="S1 Teknik Sipir">S1 Teknik Sipil</option>
+                  <option value="S1 Teknik Sipil">S1 Teknik Sipil</option>
                   <option value="S1 Teknik Mesin">S1 Teknik Mesin</option>
                   <option value="S1 Teknik Elektro">S1 Teknik Elektro</option>
                   <option value="S1 Teknik Arsitektur">S1 Teknik Arsitektur</option>
