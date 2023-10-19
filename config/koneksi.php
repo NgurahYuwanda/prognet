@@ -1,9 +1,9 @@
 <?php
 
 $db = 'db_2205551007';
-$server = 'localhost';
-$username = 'root';
-$password = '';
+$server = 'prognet.localnet';
+$username = '2205551007';
+$password = '2205551007';
 
 $conn = mysqli_connect($server, $username, $password, $db);
 if (!$conn) {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 include "config/koneksi.php";
 
 if (isset($_POST['create'])) {
@@ -34,11 +34,13 @@ if (isset($_POST['edit'])) {
 
     $hobi = isset($_POST["hobi"]) ? implode(", ", $_POST["hobi"]) : "";
 
-    $q_edit = "UPDATE tb_form SET nim = '$nim', nama = '$nama', jenis_kelamin = '$jenis_kelamin', agama = '$agama', alamat = '$alamat', telp = '$telp', prodi = '$prodi', email = '$email' WHERE nim = '$nim'";
+    $q_edit = "UPDATE tb_form SET nim = '$nim', nama = '$nama', jenis_kelamin = '$jenis_kelamin', agama = '$agama', alamat = '$alamat', telp = '$telp', prodi = '$prodi', email = '$email', hobi = '$hobi' WHERE nim = '$nim'";
 
     $exec = mysqli_query($conn, $q_edit);
     if (!$exec) {
         echo "<script type='text/javascript'>alert('Data gagal diedit!');</script>" . mysqli_error($conn);
+    } else {
+        echo "<script type='text/javascript'>alert('Data telah diedit!');</script>";
     }
 }
 
@@ -65,11 +67,11 @@ if (isset($_POST['hapus'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-    <script src="validasi.js"></script>
+    <!-- <script src="validasi.js"></script> -->
 </head>
 
 <body>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <div class="jumbotron" style="min-height: 50rem;">
         <div class="container py-5 w-50">
             <div class="col-md">
@@ -188,6 +190,7 @@ if (isset($_POST['hapus'])) {
                                     <option value="Kristen Katolik">Kristen Katolik</option>
                                     <option value="Buddha">Buddha</option>
                                     <option value="Khonghucu">Khonghucu</option>
+                                </select>
                                 <label for="prodi" class="form-label">Program Studi</label>
                                 <select class="mb-3 form-select" id="prodi" name="prodi">
                                     <option selected hidden>
@@ -218,90 +221,75 @@ if (isset($_POST['hapus'])) {
                                     </label>
                                 </div>
                                 Hobi
-                                <div class="mt-2 form-check">
-                                    <input class="form-check-input" type="checkbox" name="hobi[]" id="olahraga" value="Olahraga" <?php if ($form['hobi'] == 'Olahraga' || $form['hobi'] == 'Olahraga, Membaca, Main Musik, Lain Lain') {
-                                                                                                                                    echo 'checked';
-                                                                                                                                } ?>>
-                                    <label class="form-check-label" for="olahraga">
-                                        Olahraga
-                                    </label>
-                                </div>
-                                <div class="mt-2 form-check">
-                                    <input class="form-check-input" type="checkbox" name="hobi[]" id="membaca" value="Membaca" <?php if ($form['hobi'] == 'Membaca' || $form['hobi'] == 'Olahraga, Membaca, Main Musik, Lain Lain') {
-                                                                                                                                    echo 'checked';
-                                                                                                                                } ?>>
-                                    <label class="form-check-label" for="membaca">
-                                        Membaca
-                                    </label>
-                                </div>
-                                <div class="mt-2 form-check">
-                                    <input class="form-check-input" type="checkbox" name="hobi[]" id="main_musik" value="Main Musik" <?php if ($form['hobi'] == 'Main Musik' || $form['hobi'] == 'Olahraga, Membaca, Main Musik, Lain Lain') {
-                                                                                                                                    echo 'checked';
-                                                                                                                                } ?>>
-                                    <label class="form-check-label" for="main_musik">
-                                        Main Musik
-                                    </label>
-                                </div>
-                                <div class="mt-2 form-check">
-                                    <input class="form-check-input" type="checkbox" name="hobi[]" id="lain_lain" value="Lain-Lain" <?php if ($form['hobi'] == 'Lain-Lain' || $form['hobi'] == 'Olahraga, Membaca, Main Musik, Lain Lain') {
-                                                                                                                                    echo 'checked';
-                                                                                                                                } ?>>
-                                    <label class="form-check-label" for="lain_lain">
-                                        Lain - Lain
-                                    </label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="alamat" class="form-label">Alamat</label>
-                                    <input type="text" class="form-control" id="alamat" name="alamat" value="<?php echo $form['alamat'] ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="no_telp" class="form-label">No Telepon</label>
-                                    <input type="text" class="form-control" id="telp" name="telp" value="<?php echo $form['telp'] ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="<?php echo $form['email'] ?>">
-                                </div>
+                                <br>
+                                <?php
+                                    $hobbies = $form['hobi'];
+
+                                    // Split the values into an array
+                                    $hobbyArray = explode(', ', $hobbies);
+
+                                    // Define a list of possible hobbies
+                                    $possibleHobbies = array("Olahraga", "Membaca", "Main Musik", "Lain-Lain");
+
+                                    // Create checkboxes for each possible hobby
+                                    foreach ($possibleHobbies as $hobby) {
+                                        $isChecked = in_array($hobby, $hobbyArray) ? 'checked' : '';
+                                        echo "<input class='form-check-input' type='checkbox' name='hobi[]' value='$hobby' $isChecked> $hobby<br>";
+                                    }
+                                ?>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary" name="edit">Simpan</button>
+                            <div class="mb-3">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <input type="text" class="form-control" id="alamat" name="alamat" value="<?php echo $form['alamat'] ?>">
                             </div>
-                        </form>
+                            <div class="mb-3">
+                                <label for="no_telp" class="form-label">No Telepon</label>
+                                <input type="text" class="form-control" id="telp" name="telp" value="<?php echo $form['telp'] ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="<?php echo $form['email'] ?>">
+                            </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary" name="edit">Simpan</button>
+                    </div>
+                    </form>
                 </div>
             </div>
-            <div class="modal fade" id="hapusModal<?php echo $form['nim'] ?>" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="hapusModalLabel">PERHATIAN!!!</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form action="" method="post">
-                            <div class="modal-body">
-                                <h3>Apakah Anda Yakin Ingin Menghapus 
-                                    <?php echo $form['nama'] ?>?
-                                </h3>
-                                <input type="hidden" value="<?php echo $form['nim'] ?>" name="nim">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-danger" name="hapus">Hapus</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        <?php
-                                }
-        ?>
-        </tbody>
-        </table>
-        <a href="index.html" class="btn btn-secondary card-link mt-3">Kembali</a>
         </div>
+        <div class="modal fade" id="hapusModal<?php echo $form['nim'] ?>" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="hapusModalLabel">PERHATIAN!!!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" method="post">
+                        <div class="modal-body">
+                            <h3>Apakah Anda Yakin Ingin Menghapus
+                                <?php echo $form['nama'] ?>?
+                            </h3>
+                            <input type="hidden" value="<?php echo $form['nim'] ?>" name="nim">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-danger" name="hapus">Hapus</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <?php
+                                }
+    ?>
+    </tbody>
+    </table>
+    <a href="index.html" class="btn btn-secondary card-link mt-3">Kembali</a>
     </div>
-    <!-- <script src="TugasJavascript.js"></script> -->
+    </div>
+    <script src="TugasJavascript.js"></script>
 </body>
 
 </html>

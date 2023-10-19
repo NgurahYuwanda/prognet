@@ -16,7 +16,7 @@
     <div class="container">
       <div class="card">
         <div class="card-body">
-          <form onsubmit="return validateForm()" action="proses_input.php" method="POST">
+        <form action="proses_input.php" method="post" onsubmit="return validateForm()">
             <div class="row mb-3">
               <div class="col-sm-3">
                 <h6 class="mb-0">Nama Lengkap</h6>
@@ -132,7 +132,7 @@
               <div class="col-sm-3"></div>
               <div class="col-sm-9 text-secondary"></div>
             </div>
-            <button name="submit" type="submit" class="btn btn-success" target="_blank">Submit</button>
+            <button name="create" type="submit" class="btn btn-success" target="_blank">Submit</button>
           </form>
         </div>
       </div>
